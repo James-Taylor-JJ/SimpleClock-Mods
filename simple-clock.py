@@ -7,20 +7,24 @@ class SimpleClock(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Digital Clock")
-        self.geometry("350x220")
+        self.geometry("350x280")
         self.resizable(False, False)
+        self.configure(bg="black")
 
         self.time_label = tk.Label(
             self,
             font=("Sans-serif", 59, "normal"),
             bg="black",
             fg="white",
+            pady=10,
         )
         self.time_label.pack()
 
         self.day_label = tk.Label(
             self,
             font=("Ink Free", 34, "bold"),
+            bg="black",
+            fg="white",
         )
         self.day_label.pack()
 
