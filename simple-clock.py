@@ -43,11 +43,31 @@ class SimpleClock(tk.Tk):
         button_frame = tk.Frame(self, bg="black", pady=8)
         button_frame.pack()
 
-
+        self._fmt_btn = tk.Button(                                      
+            button_frame, text="24 hr", width=8,                           
+            command=self._toggle_format,                                 
+        )                                                               
+        self._fmt_btn.pack(side=tk.LEFT, padx=10)                       
+ 
+        self._tz_btn = tk.Button(                                       
+            button_frame, text="GMT", width=8,                             
+            command=self._toggle_timezone,                               
+        )                                                                
+        self._tz_btn.pack(side=tk.LEFT, padx=10)                        
+ 
         self._update()
+    
+    def _toggle_format(self):                                           
+        self._use_24hr = not self._use_24hr                             
+        self._fmt_btn.config(text="12 hr" if self._use_24hr else "24 hr")  
+ 
+    def _toggle_timezone(self):                                         
+        self._use_gmt = not self._use_gmt                               
+        self._tz_btn.config(text="Local" if self._use_gmt else "GMT")  
+       
 
     def _update(self):
-        now = datetime.now()
+        now = datetime.now(timezone.utc) if self._use_gmt else datetime.now()
         self.time_label.config(text=now.strftime("%I:%M:%S %p"))
         self.day_label.config(text=now.strftime("%A"))
         self.date_label.config(text=now.strftime("%d %B, %Y"))
